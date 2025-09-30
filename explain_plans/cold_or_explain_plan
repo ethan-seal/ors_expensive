@@ -1,0 +1,24 @@
+Aggregate  (cost=3969.95..3969.96 rows=1 width=8) (actual time=107.922..107.922 rows=1 loops=1)
+  Buffers: shared read=1711
+  I/O Timings: shared read=100.892
+  ->  Bitmap Heap Scan on application a  (cost=24.76..3964.98 rows=1988 width=0) (actual time=0.340..107.803 rows=2022 loops=1)
+        Recheck Cond: ((reviewer_id = 10) OR (submitter_id = 10))
+        Heap Blocks: exact=1703
+        Buffers: shared read=1711
+        I/O Timings: shared read=100.892
+        ->  BitmapOr  (cost=24.76..24.76 rows=1989 width=0) (actual time=0.137..0.137 rows=0 loops=1)
+              Buffers: shared read=8
+              I/O Timings: shared read=0.024
+              ->  Bitmap Index Scan on index_application_reviewer  (cost=0.00..11.87 rows=993 width=0) (actual time=0.097..0.098 rows=993 loops=1)
+                    Index Cond: (reviewer_id = 10)
+                    Buffers: shared read=4
+                    I/O Timings: shared read=0.013
+              ->  Bitmap Index Scan on index_application_submitter  (cost=0.00..11.89 rows=996 width=0) (actual time=0.038..0.038 rows=1029 loops=1)
+                    Index Cond: (submitter_id = 10)
+                    Buffers: shared read=4
+                    I/O Timings: shared read=0.011
+Planning:
+  Buffers: shared hit=93 read=2
+  I/O Timings: shared read=0.010
+Planning Time: 0.176 ms
+Execution Time: 107.986 ms
